@@ -116,7 +116,7 @@
     width: 157px;
     height: 164px;
     top: 231px;
-    left: 388px;
+    left: 488px;
     /*background: url(http://i.imgur.com/tE4M2o4.png);*/
     /* background-size: contain; */
 }
@@ -127,30 +127,25 @@
     height: 48px;
 }
 .custom .button.pressed{
-    background-position-y: -48px;
     margin-top: 5px;
     opacity: 1;
 }
 .custom .a{
-    background-position: 0 0;
     top: 108px;
     left: 55px;
     background: url(img/a.png);
 }
 .custom .b{
-    background-position: -49px 0;
     top: 57px;
     right: 3px;
     background: url(img/b.png);
 }
 .custom .x{
-    background-position: -98px 0;
     top: 57px;
     left: 4px;
     background: url(img/x.png);
 }
 .custom .y{
-    background-position: 48px 0;
     left: 55px;
     top: 5px;
     background: url(img/y.png);
