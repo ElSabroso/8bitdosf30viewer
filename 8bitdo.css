@@ -158,8 +158,8 @@
 }
 .custom .sticks{
     position: absolute;
-    width: 137px;
-    height: 139px;
+    width: 280px;
+    height: 130px;
     top: 239px;
     left: 224px;
     background: url(img/stick.png);*/;
@@ -171,8 +171,8 @@
     position: absolute;
     background: url(img/stick.png);
     background-position: -85px 0;
-    height: 83px;
-    width: 83px;
+    height: 130px;
+    width: 140px;
 }
 .custom .stick.pressed{
     background-position: 0 0;
