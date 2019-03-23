@@ -15,11 +15,11 @@
     display: none;
 }
 .custom .triggers{
-    width: 520px;
+    width: 857px;
     height: 121px;
     position: absolute;
-    left: 126px;
-    top: 239px;
+    left: 120px;
+    top: 14px;
     /*background: url(http://i.imgur.com/GaV5RBy.png);*/
     background-position: -152px 0px;
 }
@@ -40,16 +40,15 @@
 .custom .bumper{
     width: 242px;
     height: 48px;
-    background: url(img/bumper);
+    background: url(img/bumper.png);
     opacity: 0;
 }
 .custom .bumpers{
     position: absolute;
-    width: 536px;
+    width: 867px;
     height: 61px;
-    left: 107px;
-    top: 129px;
-    display: none;
+    left: 116px;
+    top: 95px;
 }
 .custom .bumper.pressed{
     opacity: 1;
@@ -91,9 +90,8 @@
     position: absolute;
     width: 141px;
     height: 33px;
-    top: 264px;
-    left: 306px;
-    display: none;
+    top: 240px;
+    left: 399px;
 }
 .custom .back, .custom .start{
     background: url(img/ss.png);
@@ -108,55 +106,60 @@
     float: left;
 }
 .custom .start{
-    background-position: 33px 0px;
     float: right;
+    top: 0px;
+    left: 119px;
+    position: absolute;
 }
 .custom .abxy{
     position: absolute;
-    width: 157px;
-    height: 164px;
-    top: 231px;
-    left: 488px;
+    width: 257px;
+    height: 264px;
+    top: 140px;
+    left: 720px;
     /*background: url(http://i.imgur.com/tE4M2o4.png);*/
     /* background-size: contain; */
 }
 .custom .button{
     position: absolute;
     /*background: url(http://mrmcpowned.com/gamepad/xbox-assets/abxy.svgz);*/
-    width: 48px;
-    height: 48px;
+    width: 82px;
+    height: 82px;
+    opacity:0;
 }
 .custom .button.pressed{
     margin-top: 5px;
     opacity: 1;
 }
 .custom .a{
-    top: 108px;
-    left: 55px;
+    top: 182px;
+    left: 110px;
     background: url(img/a.png);
 }
 .custom .b{
-    top: 57px;
-    right: 3px;
+    top: 101px;
+    right: -38px;
     background: url(img/b.png);
 }
 .custom .x{
-    top: 57px;
-    left: 4px;
+    top: 99px;
+    left: 8px;
     background: url(img/x.png);
+    width: 84px;
+    height: 84px;
 }
 .custom .y{
-    left: 55px;
-    top: 5px;
+    left: 110px;
+    top: 21px;
     background: url(img/y.png);
 }
 .custom .sticks{
     position: absolute;
-    width: 280px;
-    height: 130px;
-    top: 239px;
-    left: 224px;
-    background: url(img/stick.png);*/;
+    width: 680px;
+    height: 160px;
+    top: 370px;
+    left: 210px;
+    /*background: url(img/stick.png);*/
     background-position: -130px -280px;
     -webkit-clip-path: circle(50% at center);
     clip-path: circle(50% at center);
@@ -164,28 +167,27 @@
 .custom .stick{
     position: absolute;
     background: url(img/stick.png);
-    background-position: -140px 0;
+    background-position: -138px 0;
     height: 130px;
     width: 140px;
 }
 .custom .stick.pressed{
-    background-position: 0 0;
+    background-position: -140px 0;
 }
 .custom .stick.left{
-    top: 24px;
-    left: 27px;
+    top: 14px;
+    left: 111px;
 }
 .custom .stick.right{
-    top: 113px;
-    left: 288px;
+    top: 14px;
+    left: 421px;
 }
 .custom .dpad{
     position: absolute;
-    width: 110px;
-    height: 111px;
-    top: 345px;
-    left: 223px;
-    display: none;
+    width: 192px;
+    height: 192px;
+    top: 191px;
+    left: 131px;
 }
 .custom .face{
     /*background: url(http://mrmcpowned.com/gamepad/xbox-assets/dpad.svgz);*/
@@ -196,33 +198,30 @@
     opacity: 1;
 }
 .custom .face.up{
-    background-position: 34px 0;
-    left: 38px;
+    left: 62px;
     top: 0px;
-    width: 34px;
-    height: 56px;
+    width: 70px;
+    height: 60px;
     background: url(img/up.png);
 }
 .custom .face.down{
-    left: 38px;
+    left: 62px;
     bottom: 0;
-    width: 34px;
-    height: 56px;
+    width: 70px;
+    height: 60px;
     background: url(img/down.png);
 }
 .custom .face.left{
-    background-position: 0 -93px;
-    width: 55px;
-    height: 35px;
-    top: 38px;
+    width: 60px;
+    height: 138px;
+    top: 21px;
     left: 0;
     background: url(img/left.png);
 }
 .custom .face.right{
-    background-position: 0 -57px;
-    width: 55px;
-    height: 35px;
-    top: 38px;
+    width: 59px;
+    height: 71px;
+    top: 61px;
     right: 0;
     background: url(img/right.png);
 }
