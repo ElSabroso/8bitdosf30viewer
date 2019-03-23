@@ -163,14 +163,14 @@
     top: 239px;
     left: 224px;
     background: url(img/stick.png);*/;
-    background-position: -117px -214px;
+    background-position: -130px -280px;
     -webkit-clip-path: circle(50% at center);
     clip-path: circle(50% at center);
 }
 .custom .stick{
     position: absolute;
     background: url(img/stick.png);
-    background-position: -85px 0;
+    background-position: -140px 0;
     height: 130px;
     width: 140px;
 }
@@ -184,7 +184,6 @@
 .custom .stick.right{
     top: 113px;
     left: 288px;
-    display: none;
 }
 .custom .dpad{
     position: absolute;
