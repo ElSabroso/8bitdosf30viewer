@@ -14,16 +14,15 @@
 .custom.disconnected div {
     display: none;
 }
-//* .custom .triggers{
+.custom .triggers{
     width: 520px;
     height: 121px;
     position: absolute;
     left: 126px;
     top: 239px;
-    background: url(http://i.imgur.com/GaV5RBy.png);
+    /*background: url(http://i.imgur.com/GaV5RBy.png);*/
     background-position: -152px 0px;
-    -webkit-clip-path: 50%;
-}*//
+}
 .custom .trigger{
     width: 237px;
     height: 72px;
