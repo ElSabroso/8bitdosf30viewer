@@ -123,8 +123,8 @@
 .custom .button{
     position: absolute;
     /*background: url(http://mrmcpowned.com/gamepad/xbox-assets/abxy.svgz);*/
-    width: 82px;
-    height: 82px;
+    width: 84px;
+    height: 84px;
     opacity:0;
 }
 .custom .button.pressed{
@@ -132,14 +132,14 @@
     opacity: 1;
 }
 .custom .a{
-    top: 182px;
-    left: 110px;
-    background: url(img/a.png);
+    top: 180px;
+    left: 108px;
+    background: url(img/x.png);
 }
 .custom .b{
-    top: 101px;
-    right: -38px;
-    background: url(img/b.png);
+    top: 99px;
+    right: -40px;
+    background: url(img/x.png);
 }
 .custom .x{
     top: 99px;
@@ -149,9 +149,9 @@
     height: 84px;
 }
 .custom .y{
-    left: 110px;
-    top: 21px;
-    background: url(img/y.png);
+    left: 108px;
+    top: 19px;
+    background: url(img/x.png);
 }
 .custom .sticks{
     position: absolute;
