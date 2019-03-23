@@ -1,297 +1,242 @@
-/*BEGIN PS3 Controller Styling*/
-/*This class defines the base attributes of the skin*/
+/*BEGIN Xbox One Controller Styling*/
 .controller.custom{
-    background: url(img/base.png); 
-    background-repeat: no-repeat;
-    background-position: 0px 0px;
-    width: 1111px;
-    height: 582px;
-    margin-left: -485px;
-    margin-top: -212px;
+    background: url(img/base.png);
+    height: 1111px;
+    width: 582px;
+    margin-left: -375px;
+    margin-top: -285px;
+}
+.custom.white{
 }
 .custom.disconnected {
-    background: url(img/disconnected.png); 
-    background-position: 0px -424px;
-    background-repeat: no-repeat;
+    background: url(img/disconnected.png);    
 }
-/* This hides the controller's button when disconnected so only the background image remains */ 
 .custom.disconnected div {
     display: none;
 }
-.custom .triggers{ /* The triggers are housed inside a div, so this sizes the div properly and positions it */
-    width: 759px;
-    height: 34px;
+//* .custom .triggers{
+    width: 520px;
+    height: 121px;
     position: absolute;
-    left: 104px;
-}
-.custom .trigger{/* These are the actual triggers themselves */
+    left: 126px;
+    top: 239px;
+    background: url(http://i.imgur.com/GaV5RBy.png);
+    background-position: -152px 0px;
+    -webkit-clip-path: 50%;
+}*//
+.custom .trigger{
     width: 237px;
     height: 72px;
     background: url(img/trigger.png);
-    background-position: -867px 0px;
-    background-repeat: no-repeat;
     opacity: 0;
 }
-.custom .trigger.left{ 
+.custom .trigger.left{
     float: left;
+    background-position:0 0;
 }
 .custom .trigger.right{
     float: right;
-    -webkit-transform: rotateY(180deg);
     transform: rotateY(180deg);
 }
-
-/* The bumpers follow the same methodology as the triggers in terms of
-placement */
 .custom .bumper{
     width: 242px;
     height: 48px;
-    background: url(img/bumper.png);
+    background: url(img/bumper);
     opacity: 0;
 }
 .custom .bumpers{
     position: absolute;
-    width: 586px;
-    height: 28px;
-    left: 99px;
-    top: 72px;
+    width: 536px;
+    height: 61px;
+    left: 107px;
+    top: 129px;
+    display: none;
 }
-/*.custom .bumper.pressed{ [> The '.pressed' class is used for most buttons to signify they've been pressed <]*/
-    /*opacity: 1;*/
-/*}*/
-/*.custom .bumper.left{*/
-  /*/* Call me lazy or smart, but why should I make 2 bumpers when they're symmetrical*/
-  /*and I can just rotate them in the browser? Also, note that you most likely won't need*/
-  /*to use a browser speficic prefix unless it's something that is indeed browser specific.*/
-  /*NOTE: CLR Browser is basically chrome, so you use '-webkit-' as the browser prefix. */*/
-    /*-webkit-transform: rotateY(180deg);*/
-    /*transform: rotateY(180deg);*/
-    /*float: left;*/
-/*}*/
-/*.custom .bumper.right{*/
-    /*float: right;*/
-/*}*/
-
-/* This bit of code is for the player indicator, which is represented in
-quandrants on the xbox controller. That's note what it's called on the
-PS3 controller but it'd be pointless for me to change the HTML for 
-something as pedantic as a name. */
+.custom .bumper.pressed{
+    opacity: 1;
+}
+.custom .bumper.left{
+    float: left;
+}
+.custom .bumper.right{
+    float: right;
+    -webkit-transform: rotateY(180deg);
+    transform: rotateY(180deg);
+}
 .custom .quadrant{
     position: absolute;
-    height: 17px;
-    width: 111px;
-    top: 140px;
-    left: 240px;
+    /* background: url(http://mrmcpowned.com/gamepad/xbox-assets/quadrant.svgz); */
+    height: 45px;
+    width: 45px;
+    top: 258px;
+    left: 354px;
+    z-index: 0;
 }
-/* Since the player indicator is just a CSS sprite, we change the 
-position of the background to match the player number.
-NOTE: Player orderin starts at 0, so p0 = Player 1 */
 .custom .p0{
-    background-position: 0 -6px;
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
 }
 .custom .p1{
-    background-position: 0 -28px;
+    -webkit-transform: rotate(90deg);
+    transform: rotate(90deg);
 }
 .custom .p2{
-    background-position: 0 -49px;
+    -webkit-transform: rotate(270deg);
+    transform: rotate(270deg);
 }
 .custom .p3{
-    background-position: 0 -70px;
+    -webkit-transform: rotate(180deg);
+    transform: rotate(180deg);
 }
-/* This is to size and position the containing div for the 
-start and select buttons. */
 .custom .arrows{
     position: absolute;
-    width: 176px;
-    height: 62px;
-    top: 214px;
-    left: 358px;
+    width: 141px;
+    height: 33px;
+    top: 264px;
+    left: 306px;
+    display: none;
 }
-/* Setting the size and CSS sprite for the start adn select buttons */
 .custom .back, .custom .start{
-    width: 71.5px;
-    height: 61.5px;
+    background: url(img/ss.png);
+    width: 104px;
+    height: 86px;
+    opacity: 0;
 }
 .custom .back.pressed, .custom .start.pressed{
-    background: url(img/s.png);
-    background-position: -1177.5px 0px;
+    opacity: 1;
 }
 .custom .back{
     float: left;
 }
 .custom .start{
+    background-position: 33px 0px;
     float: right;
 }
-/* Positioning and size of the container for the face buttons */
 .custom .abxy{
     position: absolute;
-    width: 259px;
-    height: 218px;
-    top: 105px;
-    left: 633px;
+    width: 157px;
+    height: 164px;
+    top: 231px;
+    left: 388px;
+    /*background: url(http://i.imgur.com/tE4M2o4.png);*/
+    /* background-size: contain; */
 }
-/* base class used to simplify the sprite mapping */
 .custom .button{
     position: absolute;
-    width:75px;
-    height:75px;
+    /*background: url(http://mrmcpowned.com/gamepad/xbox-assets/abxy.svgz);*/
+    width: 48px;
+    height: 48px;
 }
 .custom .button.pressed{
-    /*background: url(img/drawing.svg);*/
-    background-position-x: -1249px;
+    background-position-y: -48px;
+    margin-top: 5px;
+    opacity: 1;
 }
 .custom .a{
-    top: 143px;
-    left: 92px;
-	background: url(img/a.png);
+    background-position: 0 0;
+    top: 108px;
+    left: 55px;
+    background: url(img/a.png);
 }
 .custom .b{
-    top: 71px;
-    right: 0px;
-	background: url(img/b.png);
+    background-position: -49px 0;
+    top: 57px;
+    right: 3px;
+    background: url(img/b.png);
 }
 .custom .x{
-    top: 71px;
-	background: url(img/x.png);
+    background-position: -98px 0;
+    top: 57px;
+    left: 4px;
+    background: url(img/x.png);
 }
 .custom .y{
-    left: 92px;
-	background: url(img/y.png);
+    background-position: 48px 0;
+    left: 55px;
+    top: 5px;
+    background: url(img/y.png);
 }
-/* Analog sticks follow the same principles as the triggers in terms of positioning
-Note that the rotation of the sticks in hard coded with javascript, so it applies 
-the CSS inline. */
 .custom .sticks{
     position: absolute;
-    width: 364px;
-    height: 105px;
-    top: 328px;
-    left: 210px;
+    width: 137px;
+    height: 139px;
+    top: 239px;
+    left: 224px;
+    background: url(img/stick.png);*/;
+    background-position: -117px -214px;
+    -webkit-clip-path: circle(50% at center);
+    clip-path: circle(50% at center);
 }
 .custom .stick{
     position: absolute;
-    height:105px;
-    width: 105px;
+    background: url(img/stick.png);
+    background-position: -85px 0;
+    height: 83px;
+    width: 83px;
 }
-.custom .stick.pressed.left{
-    background-position-x: -106px;
-}
-.custom .stick.pressed.right{
-    background-position-x: -211px;
+.custom .stick.pressed{
+    background-position: 0 0;
 }
 .custom .stick.left{
-    top: 0;
-    left: 0;
+    top: 24px;
+    left: 27px;
 }
 .custom .stick.right{
-    top: calc(100% - 105px);
-    left: calc(100% - 105px);
+    top: 113px;
+    left: 288px;
+    display: none;
 }
-/* Dpad possitioning and sizing */
 .custom .dpad{
     position: absolute;
-    width: 146px;
-    height: 146px;
-    top: 142px;
-    left: 133px;
+    width: 110px;
+    height: 111px;
+    top: 345px;
+    left: 223px;
+    display: none;
 }
 .custom .face{
+    /*background: url(http://mrmcpowned.com/gamepad/xbox-assets/dpad.svgz);*/
     position: absolute;
-}
-.custom .face.up, .custom .face.down{
-    width: 33.5px;
-    height: 34px;
-}
-.custom .face.left, .custom .face.right{
-    width: 34px;
-    height: 33.5px;
-}
-.custom .face.up{
-    left: 56px;
-    top: 0;
-    background-position: 92px 0px;
-}
-.custom .face.down{
-    left: 56px;
-    top: 112px;
-    background-position: 131px 0;
-    -webkit-transform: rotateX(180deg);
-    transform: rotateX(180deg);
-}
-.custom .face.left{
-    top: 56px;
-    left: 0;
-    background-position: 0px 0;
-    -webkit-transform: rotate(-90deg);
-    transform: rotate(-90deg);
-}
-.custom .face.right{
-    top: 56px;
-    right: 0px;
-    background-position: 53px 0;
-    -webkit-transform: rotate(90deg);
-    transform: rotate(90deg);
+    opacity: 0;
 }
 .custom .face.pressed{
-    background: url(img/drawing.svg);
-    background-position-x: -1323px;
+    opacity: 1;
 }
-/* NOTE: You NEED to set this to exactly half the height of what is listed 
-for '.controller.custom' so when your skin is activated via player selection
-parameters (e.g. http://mrmcpowned.com/gamepad?p=1) it will be correctly
-centered on screen. */
+.custom .face.up{
+    background-position: 34px 0;
+    left: 38px;
+    top: 0px;
+    width: 34px;
+    height: 56px;
+    background: url(img/up.png);
+}
+.custom .face.down{
+    left: 38px;
+    bottom: 0;
+    width: 34px;
+    height: 56px;
+    background: url(img/down.png);
+}
+.custom .face.left{
+    background-position: 0 -93px;
+    width: 55px;
+    height: 35px;
+    top: 38px;
+    left: 0;
+    background: url(img/left.png);
+}
+.custom .face.right{
+    background-position: 0 -57px;
+    width: 55px;
+    height: 35px;
+    top: 38px;
+    right: 0;
+    background: url(img/right.png);
+}
 .custom.half{
-    margin-top: -279px;
+    margin-top: -315px;
 }
-/* The following entries are empty because I haven't used them yet, but they
-exist for the purpose of displaying a fightstick. Since fightsticks have 
-the left and right triggers and digital buttons, there are separate 
-html items that allow the triggers to be shown as button presses isntead of
-an opacity setting */
-.custom .trigger-button.left{
-    
+.custom{
+    background: no-repeat center;
 }
-.custom .trigger-button.right{
-    
-}
-.custom .trigger-button.left.pressed{
-    
-}
-.custom .trigger-button.right.pressed{
-    
-}
-/* This is where the fight stick CSS would go. The ideal way of 
-showing the input would be to use an image sprite of a fight stick in
-all 8 positions, and change it according to the inputs. The classes 
-themselves are fairly self explanatory. */
-.fstick{
-    position: absolute;
-    width: 140px;
-    height: 132px;
-    top: 192px;
-    left: 74px;
-}
-.fstick.up{
-  
-}
-.fstick.down{
-  
-}
-.fstick.left{
-  
-}
-.fstick.right{
-  
-}
-.fstick.up.right{
-  
-}
-.fstick.up.left{
-  
-}
-.fstick.down.right{
-  
-}
-.fstick.down.left{
-  
-}
+/*END Xbox One Controller Styling*/
