@@ -25,15 +25,18 @@
     left: 104px;
 }
 .custom .trigger{/* These are the actual triggers themselves */
-    width: 211px;
-    height: 34px;
-    background: url(img/trigger.png); 
+    width: 237px;
+    height: 72px;
+    background: url(img/trigger.png);
     background-position: -967px 0px;
     background-repeat: no-repeat;
     opacity: 0;
 }
 .custom .trigger.left{ 
     float: left;
+    background-position: 116px 15px;
+    width:237px;
+    height:72px;
 }
 .custom .trigger.right{
     float: right;
@@ -44,8 +47,8 @@
 /* The bumpers follow the same methodology as the triggers in terms of
 placement */
 .custom .bumper{
-    width: 89px;
-    height: 28px;
+    width: 242px;
+    height: 48px;
     background: url(img/bumper.png);
     opacity: 0;
 }
