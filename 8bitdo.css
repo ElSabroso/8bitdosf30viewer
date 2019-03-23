@@ -160,19 +160,19 @@
     top: 370px;
     left: 210px;
     /*background: url(img/stick.png);*/
-    background-position: -130px -280px;
-    -webkit-clip-path: circle(50% at center);
+    /*background-position: -130px -280px;*/
+    /*-webkit-clip-path: circle(50% at center);*/
     clip-path: circle(50% at center);
 }
 .custom .stick{
     position: absolute;
     background: url(img/stick.png);
-    background-position: -138px 0;
+    background-position: 0px 0;
     height: 130px;
     width: 140px;
 }
 .custom .stick.pressed{
-    background-position: -140px 0;
+    background-position: -138px 0;
 }
 .custom .stick.left{
     top: 14px;
