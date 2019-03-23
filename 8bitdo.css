@@ -28,15 +28,12 @@
     width: 237px;
     height: 72px;
     background: url(img/trigger.png);
-    background-position: -967px 0px;
+    background-position: -867px 0px;
     background-repeat: no-repeat;
     opacity: 0;
 }
 .custom .trigger.left{ 
     float: left;
-    background-position: 6px 15px;
-    width:237px;
-    height:72px;
 }
 .custom .trigger.right{
     float: right;
