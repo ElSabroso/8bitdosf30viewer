@@ -15,13 +15,13 @@
 }
 .custom .stick {
 	position: absolute;
-	background: url(img/stick.png) repeat scroll -83px 0px transparent;
+	background: url(img/stick2.png) repeat scroll -83px 0px transparent;
 	height: 83px;
 	width: 82px;
 }
 
 .custom .stick.pressed {
-	background: url(img/stick.png) repeat scroll 0px 0px transparent;
+	background: url(img/stick2.png) repeat scroll 0px 0px transparent;
 }
 
 .custom .stick.left {
@@ -168,7 +168,7 @@
     background-image: url(img/l.png);
 }
 .custom .bumper.right{
-    background-image: url(r.png);
+    background-image: url(img/r.png);
     right:0px;
 }
 
