@@ -53,22 +53,22 @@
     opacity: 1;
     background-position-y:-47px;
 }
-.a{
+.b{
     background-position: 0 0;
     top: 55px;
     right: 1px;
 }
-.b{
+.a{
     background-position: -48px 0;
     top: 104px;
     left: 56px;
 }
-.x{
+.y{
     background-position: -96px 0;
     left: 57px;
     top: 7px;
 }
-.y{
+.x{
     background-position: 48px 0;
     top: 55px;
     left: 4px;
