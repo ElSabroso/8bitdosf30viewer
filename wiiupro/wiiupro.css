@@ -56,22 +56,22 @@
     opacity: 1;
     background-position-y:-47px;
 }
-.custom .a{
+.custom .b{
     background-position: 0 0;
     top: 55px;
     right: 1px;
 }
-.custom .b{
+.custom .a{
     background-position: -48px 0;
     top: 104px;
     left: 56px;
 }
-.custom .x{
+.custom .y{
     background-position: -96px 0;
     left: 57px;
     top: 7px;
 }
-.custom .y{
+.custom .x{
     background-position: 48px 0;
     top: 55px;
     left: 4px;
