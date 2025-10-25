@@ -1,171 +1,179 @@
 (() => {
-  // Cache de emotes: { code: url }
+  console.log("[EmoteScript] Starting");
+
   const EMOTES = new Map();
-
-  // Utilidad: escapar nombres de emotes en regex
   const escapeRegex = s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-
-  // Carga FFZ global
-  fetch("https://api.frankerfacez.com/v1/set/global")
-    .then(r => r.json())
-    .then(data => {
-      for (const setId in data.sets) {
-        for (const e of data.sets[setId].emoticons) {
-          const url = ("https:" + (e.urls["2"] || e.urls["1"]));
-          EMOTES.set(e.name, url);
-        }
-      }
-      rebuildRegex();
-    })
-    .catch(() => {});
-
-  // Carga FFZ de tu canal
-  fetch("https://api.frankerfacez.com/v1/room/team_sabroso")
-    .then(r => r.json())
-    .then(data => {
-      const sets = data.sets || {};
-      for (const setId in sets) {
-        for (const e of sets[setId].emoticons) {
-          const url = ("https:" + (e.urls["2"] || e.urls["1"]));
-          EMOTES.set(e.name, url);
-        }
-      }
-      rebuildRegex();
-    })
-    .catch(() => {});
-
-  // BTTV globales
-  fetch("https://api.betterttv.net/3/cached/emotes/global")
-    .then(r => r.json())
-    .then(list => {
-      for (const e of list) {
-        EMOTES.set(e.code, `https://cdn.betterttv.net/emote/${e.id}/2x`);
-      }
-      rebuildRegex();
-    })
-    .catch(() => {});
-
-  // 7TV globales
-  fetch("https://7tv.io/v3/emote-sets/global")
-    .then(r => r.json())
-    .then(data => {
-      const emotes = data.emotes || [];
-      for (const e of emotes) {
-        // host.url ya incluye base; 2x suele ser suficiente
-        EMOTES.set(e.name, `${e.data.host.url}/2x.webp`);
-      }
-      rebuildRegex();
-    })
-    .catch(() => {});
-
-  // Si me das tu Twitch ID numérico, activo BTTV/7TV de canal:
-  // const TWITCH_ID = ""; // <- por ahora vacío
-  // if (TWITCH_ID) {
-  //   fetch(`https://api.betterttv.net/3/cached/users/twitch/${TWITCH_ID}`)
-  //     .then(r => r.json())
-  //     .then(data => {
-  //       [...(data.channelEmotes||[]), ...(data.sharedEmotes||[])].forEach(e => {
-  //         EMOTES.set(e.code, `https://cdn.betterttv.net/emote/${e.id}/2x`);
-  //       });
-  //       rebuildRegex();
-  //     }).catch(()=>{});
-  //
-  //   fetch(`https://7tv.io/v3/users/twitch/${TWITCH_ID}`)
-  //     .then(r => r.json())
-  //     .then(data => {
-  //       const set = data.emote_set && data.emote_set.emotes ? data.emote_set.emotes : [];
-  //       set.forEach(e => {
-  //         EMOTES.set(e.name, `${e.data.host.url}/2x.webp`);
-  //       });
-  //       rebuildRegex();
-  //     }).catch(()=>{});
-  // }
-
-  // Regex combinada dinámica, reconstruida al cargar emotes
   let EMOTE_REGEX = null;
+
   function rebuildRegex() {
     if (EMOTES.size === 0) return;
     const parts = Array.from(EMOTES.keys()).map(escapeRegex);
-    // Palabra completa (bordes) para evitar reemplazar dentro de URLs o texto
+    // detecta emotes como tokens separados por espacios
     EMOTE_REGEX = new RegExp(`(^|\\s)(${parts.join("|")})(?=\\s|$)`, "g");
+    console.log(`[EmoteScript] Regex built with ${parts.length} codes`);
   }
 
-  // Reemplazo robusto: sólo nodos de texto -> inserta <img> sin usar innerHTML
+  // Cargar emotes (globales + FFZ canal team_sabroso)
+  Promise.all([
+    fetch("https://api.frankerfacez.com/v1/set/global").then(r=>r.json()).then(data=>{
+      for (const setId in data.sets) {
+        for (const e of data.sets[setId].emoticons) EMOTES.set(e.name, "https:" + (e.urls["2"] || e.urls["1"]));
+      }
+    }).catch(console.warn),
+    fetch("https://api.frankerfacez.com/v1/room/team_sabroso").then(r=>r.json()).then(data=>{
+      const sets = data.sets || {};
+      for (const setId in sets) {
+        for (const e of sets[setId].emoticons) EMOTES.set(e.name, "https:" + (e.urls["2"] || e.urls["1"]));
+      }
+    }).catch(console.warn),
+    fetch("https://api.betterttv.net/3/cached/emotes/global").then(r=>r.json()).then(list=>{
+      for (const e of list) EMOTES.set(e.code, `https://cdn.betterttv.net/emote/${e.id}/2x`);
+    }).catch(console.warn),
+    fetch("https://7tv.io/v3/emote-sets/global").then(r=>r.json()).then(data=>{
+      const ems = data.emotes || [];
+      for (const e of ems) EMOTES.set(e.name, `${e.data.host.url}/2x.webp`);
+    }).catch(console.warn)
+  ]).then(()=> {
+    rebuildRegex();
+    attachEverywhere();
+  });
+
+  // Reemplazo de nodos de texto sin usar innerHTML
   function replaceTextNodes(root) {
     if (!EMOTE_REGEX) return;
-    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+    const walker = (root.ownerDocument || document).createTreeWalker(root, NodeFilter.SHOW_TEXT, {
       acceptNode(node) {
-        // Ignorar nodos vacíos o con sólo espacios
+        const p = node.parentNode;
+        if (!p) return NodeFilter.FILTER_REJECT;
+        // evitar script/style/textarea y atributos
+        const tag = p.tagName ? p.tagName.toLowerCase() : "";
+        if (tag === "script" || tag === "style" || tag === "textarea") return NodeFilter.FILTER_REJECT;
+        // si ya hay imagen emote, omitir
+        if (p.classList && (p.classList.contains("emote-wrapper") || p.classList.contains("emote"))) return NodeFilter.FILTER_REJECT;
+        // texto útil
         return node.nodeValue && /\S/.test(node.nodeValue) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
       }
     });
 
-    const toProcess = [];
-    while (walker.nextNode()) toProcess.push(walker.currentNode);
+    const nodes = [];
+    while (walker.nextNode()) nodes.push(walker.currentNode);
 
-    for (const textNode of toProcess) {
+    for (const textNode of nodes) {
       const original = textNode.nodeValue;
+      EMOTE_REGEX.lastIndex = 0;
       if (!EMOTE_REGEX.test(original)) continue;
 
-      // Construir un fragmento con texto y <img> alternados
-      const frag = document.createDocumentFragment();
+      const frag = (root.ownerDocument || document).createDocumentFragment();
       let lastIndex = 0;
       EMOTE_REGEX.lastIndex = 0;
       let match;
+
       while ((match = EMOTE_REGEX.exec(original)) !== null) {
         const [full, leadSpace, code] = match;
         const start = match.index;
         const end = start + full.length;
 
-        // Texto previo
-        if (start > lastIndex) {
-          frag.appendChild(document.createTextNode(original.slice(lastIndex, start)));
-        }
-        // Espacio líder si existe
-        if (leadSpace) frag.appendChild(document.createTextNode(leadSpace));
+        if (start > lastIndex) frag.appendChild((root.ownerDocument || document).createTextNode(original.slice(lastIndex, start)));
+        if (leadSpace) frag.appendChild((root.ownerDocument || document).createTextNode(leadSpace));
 
-        // Emote image
         const url = EMOTES.get(code);
         if (url) {
-          const span = document.createElement("span");
-          span.className = "emote-wrapper ssnemote-inline";
-          const img = document.createElement("img");
+          const span = (root.ownerDocument || document).createElement("span");
+          span.className = "emote-wrapper";
+          const img = (root.ownerDocument || document).createElement("img");
           img.className = "emote";
           img.alt = code;
           img.src = url;
           span.appendChild(img);
           frag.appendChild(span);
         } else {
-          // Si por alguna razón no está, deja el texto tal cual
-          frag.appendChild(document.createTextNode(code));
+          frag.appendChild((root.ownerDocument || document).createTextNode(code));
         }
         lastIndex = end;
       }
+      if (lastIndex < original.length) frag.appendChild((root.ownerDocument || document).createTextNode(original.slice(lastIndex)));
 
-      // Texto restante
-      if (lastIndex < original.length) {
-        frag.appendChild(document.createTextNode(original.slice(lastIndex)));
-      }
-
-      // Reemplazar el nodo
-      textNode.parentNode.replaceChild(frag, textNode);
+      if (textNode.parentNode) textNode.parentNode.replaceChild(frag, textNode);
     }
   }
 
-  // Observador global: detecta mensajes nuevos en todo el documento
-  const observer = new MutationObserver(mutations => {
-    for (const m of mutations) {
-      for (const node of m.addedNodes) {
-        if (node.nodeType !== 1) continue;
-        // Heurística: procesa nodos que parezcan mensajes (puedes afinarla)
-        // - Si SSN usa roles o clases específicas, ajusta aquí
-        replaceTextNodes(node);
+  // Observa un root (document, shadowRoot, iframe document)
+  function observeRoot(root) {
+    if (!root) return;
+    try {
+      replaceTextNodes(root);
+      const observer = new MutationObserver(muts => {
+        for (const m of muts) {
+          for (const node of m.addedNodes) {
+            if (node && node.nodeType === 1) replaceTextNodes(node);
+          }
+        }
+      });
+      observer.observe(root, { childList: true, subtree: true });
+    } catch (e) {
+      console.warn("[EmoteScript] observeRoot error", e);
+    }
+  }
+
+  // Entrar en Shadow DOM abiertos
+  function attachShadowObservers(rootEl) {
+    const walker = document.createTreeWalker(rootEl, NodeFilter.SHOW_ELEMENT, null);
+    while (walker.nextNode()) {
+      const el = walker.currentNode;
+      if (el && el.shadowRoot) {
+        observeRoot(el.shadowRoot);
+        // también observar dentro de ese shadow por nuevos elementos con shadowRoot
+        const mo = new MutationObserver(muts => {
+          for (const m of muts) {
+            m.addedNodes.forEach(n => {
+              if (n.nodeType === 1 && n.shadowRoot) observeRoot(n.shadowRoot);
+            });
+          }
+        });
+        mo.observe(el.shadowRoot, { childList: true, subtree: true });
       }
     }
-  });
+  }
 
-  observer.observe(document.documentElement, { childList: true, subtree: true });
+  // Adjuntar en iframes de mismo origen
+  function attachIframeObservers() {
+    document.querySelectorAll("iframe").forEach(iframe => {
+      try {
+        const doc = iframe.contentDocument;
+        if (doc) {
+          observeRoot(doc);
+          // también intentar entrar a shadow dentro del iframe
+          attachShadowObservers(doc);
+        }
+      } catch (e) {
+        // si es cross-origin, no se puede
+      }
+    });
+  }
 
-  // Procesar lo ya presente al cargar
-  replaceTextNodes(document.body);
+  function attachEverywhere() {
+    console.log("[EmoteScript] Attaching observers");
+    observeRoot(document);
+    attachShadowObservers(document);
+    attachIframeObservers();
+
+    // Reintentos en caso de que el chat se monte tarde
+    let tries = 0;
+    const retry = setInterval(() => {
+      tries++;
+      attachShadowObservers(document);
+      attachIframeObservers();
+      replaceTextNodes(document.body);
+      if (tries > 20) clearInterval(retry); // ~20 reintentos
+    }, 1000);
+  }
+
+  // Si el DOM aún no está listo
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", attachEverywhere);
+  } else {
+    attachEverywhere();
+  }
+
+  console.log("[EmoteScript] Ready");
 })();
